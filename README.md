@@ -27,7 +27,7 @@ Will add once we deploy the database.
     "username": "Sam",
     "created-at": "12/24/2014",
     "photo": TBD,
-    "journal-entry": "This one was hard for me. I didn't realize how many different types of bread there were. I burnt the toast several                         times before I found the perfect cook time. I finally did it! Now I can pass this knowledge onto my precious                               children!",
+    "journal-entry": "This one was hard for me. I didn't realize how many different types of bread there were. I burnt the toast several times before I found the perfect cook time. I finally did it! Now I can pass this knowledge onto my precious children!",                 
     "completed": false
 }
 ```
