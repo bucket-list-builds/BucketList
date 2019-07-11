@@ -1,12 +1,25 @@
-import React from 'react';
-import './App.css';
+import React, { Component } from 'react';
+import './SASS/App.scss';
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Here's your App component!</h1>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+
+    }
+  }
+
+  componentDidMount() {
+
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Here's your App component!</h1>
+      </div>
+    );
+  }
 }
 
 export default App;
