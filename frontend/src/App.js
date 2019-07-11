@@ -1,10 +1,19 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
 import './SASS/App.scss';
 
+=======
+import React, {Component} from 'react';
+
+import Navigation from './components/functional/Navigation'
+import './App.scss';
+
+>>>>>>> origin/benjamin-quackenbush
 class App extends Component {
   constructor() {
     super();
     this.state = {
+<<<<<<< HEAD
 
     }
   }
@@ -20,6 +29,18 @@ class App extends Component {
       </div>
     );
   }
+=======
+      bucketList: []
+    }
+  }
+render() {
+    return (
+      <div className="App">
+        <Navigation />
+      </div>
+    );
+  }  
+>>>>>>> origin/benjamin-quackenbush
 }
 
 export default App;
