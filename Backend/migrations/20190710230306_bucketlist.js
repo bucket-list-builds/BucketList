@@ -12,7 +12,8 @@ exports.up = function(knex) {
       .onUpdate("CASCADE")
       .notNullable();
 
-    bl.integer("created_at").notNullable();
+    bl.timestamps(true, false);
+
     bl.string("photo");
     bl.string("journal_entry");
     bl.boolean("completed").notNullable();
