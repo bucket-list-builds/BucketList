@@ -21,11 +21,50 @@ router.get('/', async(req, res) => {
 
 
 // /home/:id
-// Obtain specific posts
+// Obtain post by id
 
 router.get('/:id', validatePostId, (req, res) => {
     res.status(200).json(req.post);
 });
+
+
+// /home/:id
+// Delete specific post
+
+router.delete('/:id', validatePostId, async (req, res) => {
+    try {
+        const count = await Bucketlists.remove(req.params.id);
+        if (count > 0) {
+          res.status(200).json({ message: 'The bucketlist has been deleted' });
+        } else {
+          res.status(404).json({ message: 'The bucketlist could not be found' });
+        }
+      } catch (error) {
+        res.status(500).json({
+          message: 'Error removing the post',
+        });
+      }
+});
+
+
+// /home/:id
+// Update - Update a specific post
+
+router.put('/:id', validatePostId, async (req, res) => {
+    try {
+        const post = await Bucketlists.update(req.params.id, req.body);
+        if(post) {
+            res.status(200).json({ message: "Post has been updated" });
+        } else {
+            res.status(404).json({ message: "The post could not be updated." })
+        }
+    } catch(err) {
+        res.status(500).json({ message:'Error updating post' })
+    }
+});
+
+
+
 
 
 

@@ -56,6 +56,20 @@ router.post('/:id/bucketlist', validateUserId, validatePost, async (req, res) =>
   });
 
 
+  router.delete('/:id/bucketlist/:id', validateUserId, async (req, res) => {
+    const blID = { user_id: req.params.id }
+    try {
+      const count = await Bucketlist.remove(blID);
+      if (count > 0 ) {
+          res.status(200).json({ message: 'deleted' })
+      } else {
+          res.status(404).json({ message: 'not deleted' })
+      }
+    } catch(error) {
+        res.status(500).json({ message: 'Error creating the bucketlist'});
+    }
+  });
+
 
 
 
