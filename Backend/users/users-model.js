@@ -4,8 +4,10 @@ module.exports = {
     add, 
     find,
     findBy,
-    findById
+    findById,
+    getUserBucketList
 };
+
 
 function find() {
     return db('users').select('id', 'username', 'password');
@@ -26,3 +28,10 @@ function findById(id) {
       .where({ id })
       .first();
 }
+
+function getUserBucketList(userId) {
+    return db('bucketlist as b')
+      .join('users as u', 'u.id', 'b.user_id')
+      .select('b.id', 'b.title', 'b.description', 'b.journal_entry')
+      .where('b.user_id', userId);
+  }

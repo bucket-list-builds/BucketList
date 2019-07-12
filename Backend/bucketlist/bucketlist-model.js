@@ -8,9 +8,15 @@ module.exports = {
     remove
 };
 
+
+// Get all bucketlists from db
+
 function get() {
     return db('bucketlist')
 }
+
+
+// Gets specific bucketlist by using the id
 
 function getById(id) {
     return db('bucketlist')

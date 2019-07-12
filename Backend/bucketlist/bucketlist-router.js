@@ -5,7 +5,7 @@ const Bucketlists = require('./bucketlist-model.js');
 const router = express.Router();
 
 
-
+// /home
 // Read - Obtain all posts
 
 router.get('/', async(req, res) => {
@@ -20,6 +20,7 @@ router.get('/', async(req, res) => {
 })
 
 
+// /home/:id
 // Obtain specific posts
 
 router.get('/:id', validatePostId, (req, res) => {
@@ -30,13 +31,12 @@ router.get('/:id', validatePostId, (req, res) => {
 
 
 
-
 // custom middleware
 
 async function validatePostId(req, res, next) {
     try{
         const { id } = req.params;
-        const post = await Posts.getById(id);
+        const post = await Bucketlists.getById(id);
 
         if(post) {
             req.post = post;
