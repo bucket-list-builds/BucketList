@@ -1,25 +1,24 @@
-import React, { Component } from 'react';
-import './SASS/App.scss';
+import React, {Component} from 'react';
+
+import Navigation from './components/functional/Navigation'
+import './App.scss';
+import LoginPage from './components/view/loginPage';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-
+      bucketList: []
     }
   }
-
-  componentDidMount() {
-
-  }
-
-  render() {
+render() {
     return (
       <div className="App">
-        <h1>Here's your App component!</h1>
+        <Navigation />
+        <LoginPage />
       </div>
     );
-  }
+  }  
 }
 
 export default App;
