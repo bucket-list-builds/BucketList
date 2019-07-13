@@ -4,6 +4,7 @@ import Navigation from './components/functional/Navigation';
 import BucketPage from './components/view/bucketPage';
 import './App.scss';
 import AddItemForm from './components/functional/addItemForm';
+import LoginPage from './components/view/loginPage';
 
 class App extends Component {
   constructor() {
@@ -59,6 +60,7 @@ class App extends Component {
           addNewItem={this.addNewItem}
         />
         <BucketPage bucketList={this.state.bucketList} />
+        <LoginPage />
       </div>
     );
   }
