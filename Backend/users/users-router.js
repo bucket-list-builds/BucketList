@@ -85,8 +85,8 @@ router.post('/:id/bucketlist', validateUserId, validatePost, async (req, res) =>
 
 function validatePost(req, res, next) {
   
-    if(!req.body.title || !req.body.description || !req.body.completed) {
-        res.status(400).json({ message: "Please provide title, description, and completed" })
+    if(!req.body.title || !req.body.description) {
+        res.status(400).json({ message: "Please provide title, description" })
     } else if(req.body && Object.keys(req.body).length) {
         next();
 };

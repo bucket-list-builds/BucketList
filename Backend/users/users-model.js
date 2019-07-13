@@ -32,6 +32,6 @@ function findById(id) {
 function getUserBucketList(userId) {
     return db('bucketlist as b')
       .join('users as u', 'u.id', 'b.user_id')
-      .select('b.id', 'b.title', 'b.description', 'b.journal_entry')
+      .select('b.id', 'b.title', 'b.description', 'b.journal_entry', 'b.created_at', 'b.photo', 'b.completed')
       .where('b.user_id', userId);
   }
