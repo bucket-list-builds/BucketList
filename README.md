@@ -2,7 +2,7 @@
 These are certainly subject to change as we build out the site, we will do our best to update. 
 
 # Api Url 
-Will add once we deploy the database.
+https://bucketlist-builds.herokuapp.com
 
 # Endpoints
 
