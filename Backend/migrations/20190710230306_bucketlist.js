@@ -12,11 +12,11 @@ exports.up = function(knex) {
       .onUpdate("CASCADE")
       .notNullable();
 
-    bl.timestamps(true, false);
+    bl.timestamp('created_at').defaultTo(knex.fn.now());
 
     bl.string("photo");
     bl.string("journal_entry");
-    bl.boolean("completed").notNullable();
+    bl.boolean("completed").notNullable().defaultTo(false);
   });
 };
 
