@@ -1,46 +1,56 @@
-<<<<<<< HEAD
 import React, { Component } from 'react';
 import './SASS/App.scss';
-
-=======
-import React, {Component} from 'react';
-
-import Navigation from './components/functional/Navigation'
+import Navigation from './components/functional/Navigation';
+// import bucketPage from './components/view/bucketPage';
+import LoginPage from './components/view/LoginPage';
 import './App.scss';
 
->>>>>>> origin/benjamin-quackenbush
 class App extends Component {
   constructor() {
     super();
     this.state = {
-<<<<<<< HEAD
-
+      isLoggedIn: null,
+      username: '',
+      password: '',
+      storedUsers: []
     }
   }
 
   componentDidMount() {
+    this.setState({ isLoggedIn: false });
+  }
 
+  changeHandler = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  addUser = newUser => {
+    this.setState({ storedUsers: [...this.state.storedUsers, newUser] });
   }
 
   render() {
-    return (
-      <div className="App">
-        <h1>Here's your App component!</h1>
-      </div>
-    );
-  }
-=======
-      bucketList: []
+    if (this.state.isLoggedIn === false) {
+      return (
+        <div className="App">
+          <Navigation />
+          <LoginPage 
+            username={this.state.username}
+            password={this.state.password}
+            changeHandler={this.changeHandler}
+            addUser={this.addUser}
+          />
+        </div>
+      );
     }
-  }
-render() {
-    return (
-      <div className="App">
-        <Navigation />
-      </div>
-    );
+    else {
+      return (
+        <div className="App">
+          <Navigation />
+          {/* <BucketPage /> */}
+        </div>
+      );
+    }
   }  
->>>>>>> origin/benjamin-quackenbush
 }
 
 export default App;

@@ -1,0 +1,66 @@
+/*---------------------LoginPage SCSS------------------------*/
+.LoginPage-container {
+    border: 1px solid purple;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.LoginPage-container .LoginPage-fields {
+    border: 3px solid green;
+    border-radius: 15%;
+    box-shadow: 5px 5px grey;
+    margin: 3%;
+    width: 35%;
+    height: auto;
+}
+
+.LoginPage-container .LoginPage-fields .username-field {
+    width: 52%;
+    margin: 2% 0 2% 0;
+}
+
+.LoginPage-container .LoginPage-fields .password-field {
+    width: 52%;
+    margin: 2% 0 2% 0;
+}
+
+.LoginPage-container .LoginPage-fields button {
+    width: 52%;
+    margin: 2% 0 2% 0;
+}
+
+/*--------------------Sign-Up Form SCSS------------------*/
+
+.LoginPage-signup-form {
+    border: 1px solid orange;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.LoginPage-signup-form .signup-form {
+    border: 3px solid purple;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+    margin: auto;
+}
+
+.LoginPage-signup-form .signup-form button {
+    width: 45%;
+    border-radius: 10%;
+    margin: 1%;
+}
+
+.LoginPage-signup-form .signup-form .signup-fields {
+    width: 55%;
+    margin: 1%;
+}
+
+.LoginPage-signup-form .intro-body {
+    width: 40%;
+}
