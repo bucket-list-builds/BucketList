@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-
+import Axios from 'axios'
 import Navigation from './components/functional/Navigation';
 import BucketPage from './components/view/bucketPage';
 import './App.scss';
 import AddItemForm from './components/functional/addItemForm';
 import LoginPage from './components/view/loginPage';
+
+import { Route } from 'react-router-dom';
 
 class App extends Component {
   constructor() {
@@ -27,7 +29,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    
+    Axios.get('https://bucketlist-builds.herokuapp.com/users/${id}/bucketlist')
   }
 
 
@@ -81,7 +83,7 @@ class App extends Component {
           textInputHandler={this.textInputHandler}
           addNewItem={this.addNewItem}
         />
-        <BucketPage bucketList={this.state.bucketList} completionToggle={this.toggleHandler} isOwner={this.state.isOwner} />
+        <Route path='/users/:id/bucketlist' render={ props => <BucketPage {...props} bucketList={this.state.bucketList} completionToggle={this.toggleHandler} isOwner={this.state.isOwner} />} />
         <LoginPage />
       </div>
     );
