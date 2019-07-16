@@ -19,11 +19,17 @@ class App extends Component {
           completed: true
         }
       ],
+      isOwner: true,
       isLoggedIn: true,
       itemTitle: ``,
       itemText: ``
     };
   }
+
+  componentDidMount() {
+    
+  }
+
 
   textInputHandler = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -49,6 +55,22 @@ class App extends Component {
     }
   };
 
+  toggleHandler = event => {
+    const toggledArray = [...this.state.bucketList]
+    let position = null;
+    
+    const target = toggledArray.find((cur, index) => {
+      position = index
+      return cur.id === Number.parseInt(event.target.getAttribute('data-key'), 10)
+    });
+
+    target.completed === false ? target.completed = true : target.completed = false;
+    
+    toggledArray[position] = target;
+
+    this.setState({bucketList: toggledArray});
+  };
+
   render() {
     return (
       <div className='App'>
@@ -59,7 +81,7 @@ class App extends Component {
           textInputHandler={this.textInputHandler}
           addNewItem={this.addNewItem}
         />
-        <BucketPage bucketList={this.state.bucketList} />
+        <BucketPage bucketList={this.state.bucketList} completionToggle={this.toggleHandler} isOwner={this.state.isOwner} />
         <LoginPage />
       </div>
     );

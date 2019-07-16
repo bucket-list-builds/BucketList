@@ -10,7 +10,7 @@ const Item = (props) => {
     <CardBody>
       <CardTitle>{props.listItemTitle}</CardTitle>
       <CardText>{props.listItemText}</CardText>
-      <Button onClick={()=> isOwner ? null: null}></Button>
+      <Button onClick={(event)=> isOwner ? props.completionToggle(event) : null} data-key={props.id}>{props.completed ? 'Complete' : 'Incomplete'}</Button>
     </CardBody>
   </Card>
 </div>
