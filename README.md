@@ -9,13 +9,13 @@ https://bucketlist-builds.herokuapp.com
 | Method | URL | Description |
 | -- | -- | -- |
 | POST | https://bucketlist-builds.herokuapp.com/api/auth/register | Adds user creds to DB. Returns id, username and token |
-| POST | https://bucketlist-builds.herokuapp.com/api/auth/login | Allows user access. Returns token and message |
+| POST | https://bucketlist-builds.herokuapp.com/api/auth/login |**NOT SET YET** Allows user access. Returns token and message |
 | -- | -- | -- |
 | POST | /home | Adds item to DB. Returns bucketlist item object |
 | GET | https://bucketlist-builds.herokuapp.com/home | Returns an array of all bucketlist objects. |
 | GET | https://bucketlist-builds.herokuapp.com/home/:id | **:id = bucketlist item's id.** Return a bucketlist by id. information(see below) |
 | PUT | https://bucketlist-builds.herokuapp.com/home/:id | Udpates a bucketlist by using it's id. |
-| DELETE | https://bucketlist-builds.herokuapp.com/home/:id | Removes item from DB |
+| DELETE | https://bucketlist-builds.herokuapp.com/home/:id | Removes bucketlist from DB |
 | GET | https://bucketlist-builds.herokuapp.com/users | Retrieves all users |
 | GET | https://bucketlist-builds.herokuapp.com/users/:id/bucketlist | Retrieve a specific user's bucketlist based on id |
 | POST | https://bucketlist-builds.herokuapp.com/users/:id/bucketlist | Add a new bucketlist for a specific user |
