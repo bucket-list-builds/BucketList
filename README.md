@@ -9,7 +9,7 @@ https://bucketlist-builds.herokuapp.com
 | Method | URL | Description |
 | -- | -- | -- |
 | POST | https://bucketlist-builds.herokuapp.com/api/auth/register | Adds user creds to DB. Returns id, username and token |
-| POST | https://bucketlist-builds.herokuapp.com/api/auth/register | Allows user access. Returns token and message |
+| POST | https://bucketlist-builds.herokuapp.com/api/auth/login | Allows user access. Returns token and message |
 | -- | -- | -- |
 | POST | /home | Adds item to DB. Returns bucketlist item object |
 | GET | https://bucketlist-builds.herokuapp.com/home | Returns an array of all bucketlist objects. |
