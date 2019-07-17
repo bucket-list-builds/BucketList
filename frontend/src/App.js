@@ -16,8 +16,26 @@ class App extends Component {
     }
   }
 
+  // https://bucketlist-builds.herokuapp.com/home
+
   componentDidMount() {
+<<<<<<< Updated upstream
     this.setState({ isLoggedIn: false });
+=======
+    Axios.get('https://bucketlist-builds.herokuapp.com/home/')
+      .then(response => {
+        console.log(response.data);
+        const apiArr = response.data;
+        apiArr.map(todoItem => {
+          this.setState({ bucketList: [...this.state.bucketList, todoItem] });
+        });
+        // this.setState({ bucketlist: [...this.state.bucketList, response.data] });
+        console.log(this.state.bucketList);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+>>>>>>> Stashed changes
   }
 
   changeHandler = event => {
