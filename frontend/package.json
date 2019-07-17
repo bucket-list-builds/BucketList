@@ -10,10 +10,7 @@
     "react-animations": "^1.0.0",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
-<<<<<<< HEAD
-=======
     "react-router-dom": "^5.0.1",
->>>>>>> jc-frontend
     "react-scripts": "3.0.1",
     "reactstrap": "^8.0.0"
   },

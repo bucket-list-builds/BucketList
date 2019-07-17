@@ -1,107 +1,49 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import './SASS/App.scss';
-import Navigation from './components/functional/Navigation';
-// import bucketPage from './components/view/bucketPage';
-import LoginPage from './components/view/LoginPage';
-import './App.scss';
-=======
 import Axios from 'axios'
 import Navigation from './components/functional/Navigation';
-import BucketPage from './components/view/bucketPage';
-import './App.scss';
-import AddItemForm from './components/functional/addItemForm';
-import LoginPage from './components/view/loginPage';
-
+import BucketPage from './components/view/BucketPage';
+import AddItemForm from './components/functional/AddItemForm';
+import LoginPage from './components/view/LoginPage';
 import { Route } from 'react-router-dom';
->>>>>>> jc-frontend
+
+import './App.scss';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-<<<<<<< HEAD
-      isLoggedIn: null,
-      username: '',
-      password: '',
-      storedUsers: []
-    }
-  }
-
-  // https://bucketlist-builds.herokuapp.com/home
-
-  componentDidMount() {
-<<<<<<< Updated upstream
-    this.setState({ isLoggedIn: false });
-=======
-    Axios.get('https://bucketlist-builds.herokuapp.com/home/')
-      .then(response => {
-        console.log(response.data);
-        const apiArr = response.data;
-        apiArr.map(todoItem => {
-          this.setState({ bucketList: [...this.state.bucketList, todoItem] });
-        });
-        // this.setState({ bucketlist: [...this.state.bucketList, response.data] });
-        console.log(this.state.bucketList);
-      })
-      .catch(error => {
-        console.log(error);
-      })
->>>>>>> Stashed changes
-  }
-
-  changeHandler = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  addUser = newUser => {
-    this.setState({ storedUsers: [...this.state.storedUsers, newUser] });
-  }
-
-  render() {
-    if (this.state.isLoggedIn === false) {
-      return (
-        <div className="App">
-          <Navigation />
-          <LoginPage 
-            username={this.state.username}
-            password={this.state.password}
-            changeHandler={this.changeHandler}
-            addUser={this.addUser}
-          />
-        </div>
-      );
-    }
-    else {
-      return (
-        <div className="App">
-          <Navigation />
-          {/* <BucketPage /> */}
-        </div>
-      );
-    }
-  }  
-=======
-      bucketList: [
-        { itemTitle: 'Test', itemText: 'Test Data', id: 0, completed: false },
-        {
-          itemTitle: 'Test Next',
-          itemText: 'Test Data Next',
-          id: 1,
-          completed: true
-        }
-      ],
+      bucketList: [],
+      users: [],
       isOwner: true,
-      isLoggedIn: true,
+      isLoggedIn: false,
       itemTitle: ``,
       itemText: ``
     };
   }
 
   componentDidMount() {
-    Axios.get('https://bucketlist-builds.herokuapp.com/users/${id}/bucketlist')
-  }
+    //fetching/getting bucketlist from API.
+    Axios.get('https://bucketlist-builds.herokuapp.com/home')
+      .then(response => {
+        // console.log(this.state.bucketList);
+        this.setState({ bucketList: response.data });
+        console.log(this.state.bucketList);
+      })
+      .catch(error => {
+        console.log(error.response);
+      });
 
+    //fetching/getting users from API.
+    Axios.get('https://bucketlist-builds.herokuapp.com/users')
+      .then(response => {
+        // console.log(this.state.users);
+        this.setState({ users: response.data });
+        console.log(this.state.users);
+      })
+      .catch(error => {
+        console.log(error.response);
+      });
+  }
 
   textInputHandler = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -143,22 +85,41 @@ class App extends Component {
     this.setState({bucketList: toggledArray});
   };
 
+  signIn = (username, password, event) => {
+    event.preventDefault();
+    const result = this.state.users.find(user => {
+      if (user.username === username) {
+        console.log('User found!');
+      }
+      else {
+        console.log('User not found!');
+      }
+    });
+  }
+
   render() {
     return (
       <div className='App'>
         <Navigation isLoggedIn={this.state.isLoggedIn} />
-        <AddItemForm
-          itemTitle={this.state.itemTitle}
-          itemText={this.state.itemText}
-          textInputHandler={this.textInputHandler}
-          addNewItem={this.addNewItem}
+        <LoginPage 
+          isLoggedIn={this.state.isLoggedIn}
+          users={this.state.users}
+          signIn={this.signIn}
         />
-        <Route path='/users/:id/bucketlist' render={ props => <BucketPage {...props} bucketList={this.state.bucketList} completionToggle={this.toggleHandler} isOwner={this.state.isOwner} />} />
-        <LoginPage />
+        <Route 
+          exact path='/' 
+          render={ props => 
+            <BucketPage 
+              {...props} 
+              bucketList={this.state.bucketList} 
+              completionToggle={this.toggleHandler} 
+              isOwner={this.state.isOwner} 
+            />
+          } 
+        />
       </div>
     );
   }
->>>>>>> jc-frontend
 }
 
 export default App;
