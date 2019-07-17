@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Axios from 'axios'
 import Navigation from './components/functional/Navigation';
 import BucketPage from './components/view/bucketPage';
 import './App.scss';
@@ -26,10 +25,6 @@ class App extends Component {
       itemTitle: ``,
       itemText: ``
     };
-  }
-
-  componentDidMount() {
-    Axios.get('https://bucketlist-builds.herokuapp.com/users/${id}/bucketlist')
   }
 
 
