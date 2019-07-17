@@ -11,16 +11,6 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      bucketList: [
-        { itemTitle: 'Test', itemText: 'Test Data', id: 0, completed: false },
-        {
-          itemTitle: 'Test Next',
-          itemText: 'Test Data Next',
-          id: 1,
-          completed: true
-        }
-      ],
-      isOwner: true,
       isLoggedIn: true,
       itemTitle: ``,
       itemText: ``
@@ -78,7 +68,7 @@ class App extends Component {
           textInputHandler={this.textInputHandler}
           addNewItem={this.addNewItem}
         />
-        <Route path='/users/:id/bucketlist' render={ props => <BucketPage {...props} bucketList={this.state.bucketList} completionToggle={this.toggleHandler} isOwner={this.state.isOwner} />} />
+        <Route path='/users/:id/bucketlist' render={ props => <BucketPage {...props}  completionToggle={this.toggleHandler}/>} />
         <LoginPage />
       </div>
     );

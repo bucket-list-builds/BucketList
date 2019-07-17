@@ -5,16 +5,16 @@ import axios from 'axios';
 class BucketPage extends Component {
   constructor(props) {
     super(props);
-    this.id = this.props.match.id;
+    this.id = this.props.match.params.id;
     this.state = {
       bucketList: [
-        { itemTitle: 'Test', itemText: 'Test Data', id: 100100, completed: false },
-        {
-          itemTitle: 'Test Next',
-          itemText: 'Test Data Next',
-          id: 999,
-          completed: true
-        }
+        // { itemTitle: 'Test', itemText: 'Test Data', id: 100100, completed: false },
+        // {
+        //   itemTitle: 'Test Next',
+        //   itemText: 'Test Data Next',
+        //   id: 999,
+        //   completed: true
+        // }
       ],
       isOwner: true,
       isLoggedIn: true,
@@ -23,13 +23,16 @@ class BucketPage extends Component {
     };
   }
   componentDidMount() {
+    console.log(this.props.match)
     axios.get(
-      `https://bucketlist-builds.herokuapp.com/home/1`
-    ).then(res => {
-      this.setState({ bucketList: [...res.data, this.state.bucketList]})
-    console.log('this is the data', res.data)
+      `https://bucketlist-builds.herokuapp.com/users/${this.id}/bucketlist`
+    ).then(res => {    
+      
+      console.log('this is the data', res.data)
+      this.setState({ bucketList: [...res.data]})
     })
-      .catch(err => console.log('this is the error', ''))
+      .catch(err => console.log('this is the error', err))
+    
   }
 
   render() {
