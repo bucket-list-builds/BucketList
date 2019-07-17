@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-
+import axios from 'axios';
 class RegistrationPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userName: '',
+            username: '',
             password: '',
-            hasAgreed: false
+            // hasAgreed: false
 
         }
 
@@ -24,12 +24,27 @@ class RegistrationPage extends Component {
             [name]: value
         })
     }
-    handleSubmit(event) {
-        event.preventDefault();
+    // handleSubmit(event) {
+    //     event.preventDefault();
 
-        console.log('The form was submitted with the following data:')
-        console.log(this.state);
-    }
+    //     console.log('The form was submitted with the following data:')
+    //     console.log(this.state);
+    // }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        axios.post('https://bucketlist-builds.herokuapp.com/api/auth/register', this.state)
+          .then(res => {
+            localStorage.setItem('jwt', res.data.token);
+            this.props.history.push('/home');
+          }).catch(err => {
+            console.log(err);
+          })
+        this.setState({
+          username: "",
+          password: "",
+        })
+      }
 
     render() {
         return (
@@ -41,8 +56,8 @@ class RegistrationPage extends Component {
                         <input 
                             type = "text" 
                             placeholder="Enter a User Name here"
-                            name="userName"
-                            value={this.state.userName}
+                            name="username"
+                            value={this.state.username}
                             onChange={this.handleChange}
                         />
 
@@ -58,7 +73,7 @@ class RegistrationPage extends Component {
                         />
                         
                     </div>
-                    <div>
+                    {/* <div>
                         <label>
                             <input 
                                 type="checkbox" 
@@ -68,7 +83,7 @@ class RegistrationPage extends Component {
                             />
                             I agree to no terms of agreement.
                         </label>
-                    </div>
+                    </div> */}
                     <div>
                         <button>Sign Up</button>
 
