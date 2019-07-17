@@ -4,6 +4,7 @@ import Navigation from './components/functional/Navigation'
 import './App.scss';
 import LoginPage from './components/view/loginPage';
 import RegistrationPage from './components/view/registrationPage'
+import { Route, withRouter } from "react-router-dom"
 
 class App extends Component {
   constructor() {
@@ -23,4 +24,4 @@ render() {
   }  
 }
 
-export default App;
+export default withRouter(App);
