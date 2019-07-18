@@ -1,98 +1,109 @@
 import React, { Component } from "react";
-import axios from "axios";
-class LoginPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-            // error: ''
-        }
+import axios from 'axios';
+import ReactDOM from 'react-dom';
 
-        this.handlePassChange = this.handlePassChange.bind(this);
-        this.handleUserChange = this.handleUserChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.dismissError = this.dismissError.bind(this);
-    }
+import { BrowserRouter as Router } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-    dismissError() {
-        this.setState({ error: ''});
-    }
+// import './SASS/index.scss';
 
-    // handleSubmit(event) {
-    //     event.preventDefault();
 
-    //     if (!this.state.username) {
-    //         return this.setState({ error: 'Username is required'});
-    //     }
+class RegistrationPage extends Component {
+   constructor(props) {
+       super(props);
+       this.state = {
+           username: '',
+           password: '',
+           // hasAgreed: false
 
-    //     if (!this.state.password) {
-    //         return this.setState({ error: 'Password is required'});
-    //     }
-    //     return this.setState({ error: 'Fake Log In Success'});
-    // }
+       }
 
-    handleSubmit = event => {
-        event.preventDefault();
-        axios.post('https://bucketlist-builds.herokuapp.com/api/auth/login', this.state)
-          .then(res => {
-            localStorage.setItem('jwt', res.data.token);
-            this.props.history.push('/home');
-          }).catch(err => {
-            console.log(err);
-          })
-          this.setState({
-            username: "",
-            password: ""
-          })
-      }
+       this.handleChange = this.handleChange.bind(this);
+       this.handleSubmit = this.handleSubmit.bind(this);
 
-    handleUserChange(event) {
-        this.setState({
-            username: event.target.value
-        })
-    }
+   }
 
-    handlePassChange(event) {
-        this.setState({
-            password: event.target.value
-        })
-    }
+   handleChange(event) {
+       let target = event.target;
+       let value = target.type === 'checkbox' ? target.checked : target.value;
+       let name = target.name;
 
-    render() {
-        return (
-            <div className="Login">
-                <form onSubmit={this.handleSubmit}>
-                    {/* {
-                        this.state.error &&
-                        <h3 data-test="error" onClick={this.dismissError}>
-                            <button onClick={this.dismissError}>X</button>
-                            {this.state.error}
-                        </h3>
-                    } */}
-                    <label>User Name</label>
-                    <input 
-                        type="text" 
-                        data-test="username" 
-                        value={this.state.username} 
-                        onChange={this.handleUserChange} 
-                    />
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        data-test="password"
-                        value={this.state.password}
-                        onChange={this.handlePassChange}
-                    />
-                    <input
-                        type="submit" value="Log In" data-test="submit"
-                    />
-                </form>
-            </div>
+       this.setState({
+           [name]: value
+       })
+   }
+   // handleSubmit(event) {
+   //     event.preventDefault();
 
-        )
+   //     console.log('The form was submitted with the following data:')
+   //     console.log(this.state);
+   // }
 
-    }
+   handleSubmit = event => {
+       event.preventDefault();
+       axios.post('https://bucketlist-builds.herokuapp.com/api/auth/register', this.state)
+         .then(res => {
+             console.log(this.props)
+           localStorage.setItem('jwt', res.data.token);
+           this.props.history.push('/home');
+         }).catch(err => {
+           console.log(err);
+         })
+       this.setState({
+         username: "",
+         password: "",
+       })
+     }
+
+   render() {
+       return (
+           <div>
+               <p>To sign up, please enter a user name, password, and accept the terms of condtion.</p>
+               <form onSubmit={this.handleSubmit}>
+                   <div>
+                       <label>User Name</label>
+                       <input
+                           type = "text"
+                           placeholder="Enter a User Name here"
+                           name="username"
+                           value={this.state.username}
+                           onChange={this.handleChange}
+                       />
+
+                   </div>
+                   <div>
+                       <label>Password</label>
+                       <input
+                           type = "password"
+                           placeholder="Enter a Password here"
+                           name="password"
+                           value={this.state.password}
+                           onChange={this.handleChange}
+                       />
+
+                   </div>
+                   {/* <div>
+                       <label>
+                           <input
+                               type="checkbox"
+                               name="hasAgreed"
+                               value={this.state.hasAgreed}
+                               onChange={this.handleChange}
+                           />
+                           I agree to no terms of agreement.
+                       </label>
+                   </div> */}
+                   <div>
+                       <button>Sign Up</button>
+
+                   </div>
+               </form>
+           </div>
+       )
+   }
 }
 
-export default LoginPage;
+
+
+
+export default RegistrationPage;
