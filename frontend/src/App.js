@@ -3,11 +3,9 @@ import Axios from 'axios'
 import Navigation from './components/functional/Navigation';
 import BucketPage from './components/view/BucketPage';
 import AddItemForm from './components/functional/AddItemForm';
-// import LoginPage from './components/view/LoginPage';
-// import { Route } from 'react-router-dom';
 
 import './App.scss';
-import LoginPage from './components/view/loginPage';
+import LoginPage from './components/view/LoginPage';
 import RegistrationPage from './components/view/registrationPage'
 import { Route, withRouter } from "react-router-dom"
 

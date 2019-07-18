@@ -1,109 +1,98 @@
 import React, { Component } from "react";
-import axios from 'axios';
-import ReactDOM from 'react-dom';
-
-import { BrowserRouter as Router } from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-// import './SASS/index.scss';
-
-
-class RegistrationPage extends Component {
+import axios from "axios";
+class LoginPage extends Component {
    constructor(props) {
        super(props);
        this.state = {
            username: '',
            password: '',
-           // hasAgreed: false
-
+           // error: ''
        }
 
-       this.handleChange = this.handleChange.bind(this);
+       this.handlePassChange = this.handlePassChange.bind(this);
+       this.handleUserChange = this.handleUserChange.bind(this);
        this.handleSubmit = this.handleSubmit.bind(this);
-
+       this.dismissError = this.dismissError.bind(this);
    }
 
-   handleChange(event) {
-       let target = event.target;
-       let value = target.type === 'checkbox' ? target.checked : target.value;
-       let name = target.name;
-
-       this.setState({
-           [name]: value
-       })
+   dismissError() {
+       this.setState({ error: ''});
    }
+
    // handleSubmit(event) {
    //     event.preventDefault();
 
-   //     console.log('The form was submitted with the following data:')
-   //     console.log(this.state);
+   //     if (!this.state.username) {
+   //         return this.setState({ error: 'Username is required'});
+   //     }
+
+   //     if (!this.state.password) {
+   //         return this.setState({ error: 'Password is required'});
+   //     }
+   //     return this.setState({ error: 'Fake Log In Success'});
    // }
 
    handleSubmit = event => {
        event.preventDefault();
-       axios.post('https://bucketlist-builds.herokuapp.com/api/auth/register', this.state)
+       axios.post('https://bucketlist-builds.herokuapp.com/api/auth/login', this.state)
          .then(res => {
-             console.log(this.props)
            localStorage.setItem('jwt', res.data.token);
            this.props.history.push('/home');
          }).catch(err => {
            console.log(err);
          })
-       this.setState({
-         username: "",
-         password: "",
-       })
+         this.setState({
+           username: "",
+           password: ""
+         })
      }
+
+   handleUserChange(event) {
+       this.setState({
+           username: event.target.value
+       })
+   }
+
+   handlePassChange(event) {
+       this.setState({
+           password: event.target.value
+       })
+   }
 
    render() {
        return (
-           <div>
-               <p>To sign up, please enter a user name, password, and accept the terms of condtion.</p>
+           <div className="Login">
                <form onSubmit={this.handleSubmit}>
-                   <div>
-                       <label>User Name</label>
-                       <input
-                           type = "text"
-                           placeholder="Enter a User Name here"
-                           name="username"
-                           value={this.state.username}
-                           onChange={this.handleChange}
-                       />
-
-                   </div>
-                   <div>
-                       <label>Password</label>
-                       <input
-                           type = "password"
-                           placeholder="Enter a Password here"
-                           name="password"
-                           value={this.state.password}
-                           onChange={this.handleChange}
-                       />
-
-                   </div>
-                   {/* <div>
-                       <label>
-                           <input
-                               type="checkbox"
-                               name="hasAgreed"
-                               value={this.state.hasAgreed}
-                               onChange={this.handleChange}
-                           />
-                           I agree to no terms of agreement.
-                       </label>
-                   </div> */}
-                   <div>
-                       <button>Sign Up</button>
-
-                   </div>
+                   {/* {
+                       this.state.error &&
+                       <h3 data-test="error" onClick={this.dismissError}>
+                           <button onClick={this.dismissError}>X</button>
+                           {this.state.error}
+                       </h3>
+                   } */}
+                   <label>User Name</label>
+                   <input
+                       type="text"
+                       data-test="username"
+                       value={this.state.username}
+                       onChange={this.handleUserChange}
+                   />
+                   <label>Password</label>
+                   <input
+                       type="password"
+                       data-test="password"
+                       value={this.state.password}
+                       onChange={this.handlePassChange}
+                   />
+                   <input
+                       type="submit" value="Log In" data-test="submit"
+                   />
                </form>
            </div>
+
        )
+
    }
 }
 
-
-
-
-export default RegistrationPage;
+export default LoginPage;
