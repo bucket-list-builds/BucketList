@@ -17,8 +17,21 @@ render() {
     return (
       <div className="App">
         <Navigation />
-        <LoginPage />
-        <RegistrationPage />
+        <Route
+          path="/"
+          render={props => (
+            <LoginPage {...props} />
+          )}
+        />
+        
+        {/* <RegistrationPage /> */}
+        <Route
+             path="/"
+            //  exact
+             render={props => (
+               <RegistrationPage  {...props} />
+             )}
+           />
       </div>
     );
   }  

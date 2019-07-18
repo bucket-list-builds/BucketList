@@ -43,6 +43,7 @@ class RegistrationPage extends Component {
         event.preventDefault();
         axios.post('https://bucketlist-builds.herokuapp.com/api/auth/register', this.state)
           .then(res => {
+              console.log(this.props)
             localStorage.setItem('jwt', res.data.token);
             this.props.history.push('/home');
           }).catch(err => {

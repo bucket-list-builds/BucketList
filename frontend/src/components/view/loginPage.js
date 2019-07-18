@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-
+import axios from "axios";
 class LoginPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
             password: '',
-            error: ''
+            // error: ''
         }
 
         this.handlePassChange = this.handlePassChange.bind(this);
@@ -19,18 +19,33 @@ class LoginPage extends Component {
         this.setState({ error: ''});
     }
 
-    handleSubmit(event) {
+    // handleSubmit(event) {
+    //     event.preventDefault();
+
+    //     if (!this.state.username) {
+    //         return this.setState({ error: 'Username is required'});
+    //     }
+
+    //     if (!this.state.password) {
+    //         return this.setState({ error: 'Password is required'});
+    //     }
+    //     return this.setState({ error: 'Fake Log In Success'});
+    // }
+
+    handleSubmit = event => {
         event.preventDefault();
-
-        if (!this.state.username) {
-            return this.setState({ error: 'Username is required'});
-        }
-
-        if (!this.state.password) {
-            return this.setState({ error: 'Password is required'});
-        }
-        return this.setState({ error: 'Fake Log In Success'});
-    }
+        axios.post('https://bucketlist-builds.herokuapp.com/api/auth/login', this.state)
+          .then(res => {
+            localStorage.setItem('jwt', res.data.token);
+            this.props.history.push('/home');
+          }).catch(err => {
+            console.log(err);
+          })
+          this.setState({
+            username: "",
+            password: ""
+          })
+      }
 
     handleUserChange(event) {
         this.setState({
@@ -48,13 +63,13 @@ class LoginPage extends Component {
         return (
             <div className="Login">
                 <form onSubmit={this.handleSubmit}>
-                    {
+                    {/* {
                         this.state.error &&
                         <h3 data-test="error" onClick={this.dismissError}>
                             <button onClick={this.dismissError}>X</button>
                             {this.state.error}
                         </h3>
-                    }
+                    } */}
                     <label>User Name</label>
                     <input 
                         type="text" 
