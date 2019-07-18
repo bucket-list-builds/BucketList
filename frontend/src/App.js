@@ -3,10 +3,11 @@ import Axios from 'axios'
 import Navigation from './components/functional/Navigation';
 import BucketPage from './components/view/BucketPage';
 import AddItemForm from './components/functional/AddItemForm';
-import LoginPage from './components/view/LoginPage';
-import { Route } from 'react-router-dom';
 
 import './App.scss';
+import LoginPage from './components/view/LoginPage';
+import RegistrationPage from './components/view/registrationPage'
+import { Route, withRouter } from "react-router-dom"
 
 class App extends Component {
   constructor() {
@@ -99,13 +100,27 @@ class App extends Component {
 
   render() {
     return (
+
+      
+      
       <div className='App'>
         <Navigation isLoggedIn={this.state.isLoggedIn} />
-        <LoginPage 
-          isLoggedIn={this.state.isLoggedIn}
-          users={this.state.users}
-          signIn={this.signIn}
+      
+          <Route
+          path="/"
+          render={props => (
+            <LoginPage {...props} />
+          )}
         />
+
+          <Route
+             path="/"
+
+             render={props => (
+               <RegistrationPage  {...props} />
+             )}
+           />
+
         <Route 
           exact path='/' 
           render={ props => 
@@ -122,4 +137,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
