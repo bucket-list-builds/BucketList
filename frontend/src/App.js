@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import Navigation from './components/functional/Navigation';
-import BucketPage from './components/view/BucketPage';
-import AddItemForm from './components/functional/AddItemForm';
-import LogOut from './components/view/LogOut';
-import './App.scss';
-import LoginPage from './components/view/loginPage';
-import RegistrationPage from './components/view/registrationPage'
-import { Route, withRouter } from "react-router-dom"
-import axios from "axios"
-import Axios from "axios"
+import React, { Component } from "react";
+import Navigation from "./components/functional/Navigation";
+import BucketPage from "./components/view/BucketPage";
+import AddItemForm from "./components/functional/AddItemForm";
+import LogOut from "./components/view/LogOut";
+import "./App.scss";
+import LoginPage from "./components/view/loginPage";
+import RegistrationPage from "./components/view/registrationPage";
+import { Route, withRouter } from "react-router-dom";
+import axios from "axios";
+import Axios from "axios";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.id = this.props.match.params.id
+    this.id = this.props.match.params.id;
     this.state = {
       bucketList: [],
       users: [],
@@ -26,7 +26,7 @@ class App extends Component {
 
   componentDidMount() {
     //fetching/getting bucketlist from API.
-    Axios.get('https://bucketlist-builds.herokuapp.com/home')
+    Axios.get("https://bucketlist-builds.herokuapp.com/home")
       .then(response => {
         // console.log(this.state.bucketList);
         this.setState({ bucketList: response.data });
@@ -37,7 +37,7 @@ class App extends Component {
       });
 
     //fetching/getting users from API.
-    Axios.get('https://bucketlist-builds.herokuapp.com/users')
+    Axios.get("https://bucketlist-builds.herokuapp.com/users")
       .then(response => {
         // console.log(this.state.users);
         this.setState({ users: response.data });
@@ -52,19 +52,21 @@ class App extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  goBackWithID = (childData) => {
-    console.log('childData', childData)
-    this.props.history.push(`/users/${this.id}/bucketlist`)
-  }
+  goBackWithID = childData => {
+    console.log("childData", childData);
+    this.props.history.push(`/users/${this.id}/bucketlist`);
+  };
 
-  addNewItem = (event) => {
+  addNewItem = event => {
     event.preventDefault();
-    if (this.state.newItem !== '') {
+    if (this.state.newItem !== "") {
       axios
-        .post('https://bucketlist-builds.herokuapp.com/users//bucketlist', {title: this.state.itemTitle, description: this.state.itemText}
-        )
-        .then(res => this.goBackWithID() )
-        .catch(err => console.log('Post Error on Add New Item', err));
+        .post("https://bucketlist-builds.herokuapp.com/users//bucketlist", {
+          title: this.state.itemTitle,
+          description: this.state.itemText
+        })
+        .then(res => this.goBackWithID())
+        .catch(err => console.log("Post Error on Add New Item", err));
     }
   };
   toggleHandler = event => {
@@ -74,7 +76,7 @@ class App extends Component {
     const target = toggledArray.find((cur, index) => {
       position = index;
       return (
-        cur.id === Number.parseInt(event.target.getAttribute('data-key'), 10)
+        cur.id === Number.parseInt(event.target.getAttribute("data-key"), 10)
       );
     });
 
@@ -91,57 +93,51 @@ class App extends Component {
     event.preventDefault();
     const result = this.state.users.find(user => {
       if (user.username === username) {
-        console.log('User found!');
-      }
-      else {
-        console.log('User not found!');
+        console.log("User found!");
+      } else {
+        console.log("User not found!");
       }
     });
-  }
-  
+  };
+
+  onLogin = e => {
+    e.preventDefault();
+    this.props.history.push("/login");
+  };
+
+  onRegister = e => {
+    e.preventDefault();
+    this.props.history.push("register");
+  };
 
   render() {
     return (
-
-      
-      
-      <div className='App'>
+      <div className="App">
         <Navigation isLoggedIn={this.state.isLoggedIn} />
-        
-        
+        <div>
+          <button onClick={this.onLogin}>Log In</button>
+          <button onClick={this.onRegister}>Register</button>
+        </div>
+        <Route path="/login" render={props => <LoginPage {...props} />} />
 
-          <Route 
-          path="/"
-          render={props => (
-            <LogOut {...props} />
-          )}
-          />
-          <Route
-          path="/"
-          render={props => (
-            <LoginPage {...props} />
-          )}
+        <Route
+          path="/register"
+          render={props => <RegistrationPage {...props} />}
         />
 
-          <Route
-             path="/"
-
-             render={props => (
-               <RegistrationPage  {...props} />
-             )}
-           />
-
-        <Route 
-          exact path='/' 
-          render={ props => 
-            <BucketPage 
-              {...props} 
-              bucketList={this.state.bucketList} 
-              completionToggle={this.toggleHandler} 
-              isOwner={this.state.isOwner} 
+        <Route
+          exact
+          path="/home"
+          render={props => (
+            <BucketPage
+              {...props}
+              bucketList={this.state.bucketList}
+              completionToggle={this.toggleHandler}
+              isOwner={this.state.isOwner}
             />
-          } 
+          )}
         />
+        <Route path="/" render={props => <LogOut {...props} />} />
       </div>
     );
   }
