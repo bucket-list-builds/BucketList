@@ -17,6 +17,7 @@ https://bucketlist-builds.herokuapp.com
 | PUT | https://bucketlist-builds.herokuapp.com/home/:id | Udpates a bucketlist by using it's id. |
 | DELETE | https://bucketlist-builds.herokuapp.com/home/:id | Removes bucketlist from DB |
 | GET | https://bucketlist-builds.herokuapp.com/users | Retrieves all users |
+| GET | | GET | https://bucketlist-builds.herokuapp.com/users/:id | Retrieves a specific user |
 | GET | https://bucketlist-builds.herokuapp.com/users/:id/bucketlist | Retrieve a specific user's bucketlist based on id |
 | POST | https://bucketlist-builds.herokuapp.com/users/:id/bucketlist | Add a new bucketlist for a specific user |
 | -- | -- | -- |
