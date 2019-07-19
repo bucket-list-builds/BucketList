@@ -1,21 +1,49 @@
 import React, { Component } from 'react';
 import Navigation from './components/functional/Navigation';
-import BucketPage from './components/view/bucketPage';
+import BucketPage from './components/view/BucketPage';
+import AddItemForm from './components/functional/AddItemForm';
+
 import './App.scss';
-import AddItemForm from './components/functional/addItemForm';
-import LoginPage from './components/view/loginPage';
-import axios from 'axios';
-import { Route, withRouter } from 'react-router-dom';
+import LoginPage from './components/view/LoginPage';
+import RegistrationPage from './components/view/registrationPage'
+import { Route, withRouter } from "react-router-dom"
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.id = this.props.match.params.id
     this.state = {
-      isLoggedIn: true,
+      bucketList: [],
+      users: [],
+      isOwner: true,
+      isLoggedIn: false,
       itemTitle: ``,
       itemText: ``
     };
+  }
+
+  componentDidMount() {
+    //fetching/getting bucketlist from API.
+    Axios.get('https://bucketlist-builds.herokuapp.com/home')
+      .then(response => {
+        // console.log(this.state.bucketList);
+        this.setState({ bucketList: response.data });
+        console.log(this.state.bucketList);
+      })
+      .catch(error => {
+        console.log(error.response);
+      });
+
+    //fetching/getting users from API.
+    Axios.get('https://bucketlist-builds.herokuapp.com/users')
+      .then(response => {
+        // console.log(this.state.users);
+        this.setState({ users: response.data });
+        console.log(this.state.users);
+      })
+      .catch(error => {
+        console.log(error.response);
+      });
   }
 
   textInputHandler = event => {
@@ -57,36 +85,52 @@ class App extends Component {
     this.setState({ bucketList: toggledArray });
   };
 
+  signIn = (username, password, event) => {
+    event.preventDefault();
+    const result = this.state.users.find(user => {
+      if (user.username === username) {
+        console.log('User found!');
+      }
+      else {
+        console.log('User not found!');
+      }
+    });
+  }
+
   render() {
     return (
+
+      
+      
       <div className='App'>
         <Navigation isLoggedIn={this.state.isLoggedIn} />
-
-        <Route
-          exact
-          path='/users/:id/bucketlist'
+      
+          <Route
+          path="/"
           render={props => (
-            <BucketPage {...props} completionToggle={this.toggleHandler} goBackID={this.goBackWithID} />
+            <LoginPage {...props} />
           )}
         />
-        <Route
-          path='/users/:id/bucketlist/add-item'
-          render={props => {
-            return (
-              <>
-                <AddItemForm
-                  itemTitle={this.state.itemTitle}
-                  itemText={this.state.itemText}
-                  textInputHandler={this.textInputHandler}
-                  addNewItem={this.addNewItem}
-                />
-                <BucketPage {...props} completionToggle={this.toggleHandler} goBackID={this.goBackWithID} />
-              </>
-            );
-          }}
-        />
 
-        <LoginPage />
+          <Route
+             path="/"
+
+             render={props => (
+               <RegistrationPage  {...props} />
+             )}
+           />
+
+        <Route 
+          exact path='/' 
+          render={ props => 
+            <BucketPage 
+              {...props} 
+              bucketList={this.state.bucketList} 
+              completionToggle={this.toggleHandler} 
+              isOwner={this.state.isOwner} 
+            />
+          } 
+        />
       </div>
     );
   }
