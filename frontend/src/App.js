@@ -5,11 +5,12 @@ import './App.scss';
 import AddItemForm from './components/functional/addItemForm';
 import LoginPage from './components/view/loginPage';
 import axios from 'axios';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.id = this.props.match.params.id
     this.state = {
       isLoggedIn: true,
       itemTitle: ``,
@@ -21,13 +22,18 @@ class App extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  goBackWithID = (childData) => {
+    console.log('childData', childData)
+    this.props.history.push(`/users/${this.id}/bucketlist`)
+  }
+
   addNewItem = (event) => {
     event.preventDefault();
     if (this.state.newItem !== '') {
       axios
         .post('https://bucketlist-builds.herokuapp.com/users/1/bucketlist', {title: this.state.itemTitle, description: this.state.itemText}
         )
-        .then()
+        .then(res => this.goBackWithID() )
         .catch(err => console.log('Post Error on Add New Item', err));
     }
   };
@@ -60,7 +66,7 @@ class App extends Component {
           exact
           path='/users/:id/bucketlist'
           render={props => (
-            <BucketPage {...props} completionToggle={this.toggleHandler} />
+            <BucketPage {...props} completionToggle={this.toggleHandler} goBackID={this.goBackWithID} />
           )}
         />
         <Route
@@ -74,7 +80,7 @@ class App extends Component {
                   textInputHandler={this.textInputHandler}
                   addNewItem={this.addNewItem}
                 />
-                <BucketPage {...props} completionToggle={this.toggleHandler} />
+                <BucketPage {...props} completionToggle={this.toggleHandler} goBackID={this.goBackWithID} />
               </>
             );
           }}
@@ -86,4 +92,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

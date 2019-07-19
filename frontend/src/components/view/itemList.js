@@ -18,6 +18,8 @@ const ItemList = props => {
             completionToggle={props.completionToggle}
             isOwner={props.isOwner}
             key={item.id}
+            goBackID={props.goBackID}
+            passedDownID={props.passedDownID}
           />
           </span>
         );

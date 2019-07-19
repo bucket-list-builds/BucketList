@@ -35,12 +35,15 @@ class BucketPage extends Component {
     
   }
 
+  
   render() {
     return (
       <ItemList
         bucketList={this.state.bucketList}
         completionToggle={this.props.completionToggle}
         isOwner={this.state.isOwner}
+        goBackID={this.props.goBackID}
+        passedDownID={this.id}
       />
     );
   }

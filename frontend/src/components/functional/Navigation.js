@@ -52,7 +52,7 @@ class Navigation extends Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <NavLink to={`/user/${this.loggedInUser}/bucketlist/add-todo`}>Add New Item</NavLink>
+                    <NavLink to={`/users/${this.props.loggedInUserID}/bucketlist/add-item`}>Add New Item</NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink to='/user/:id'>Profile</NavLink>
