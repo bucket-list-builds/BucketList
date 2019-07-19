@@ -4,9 +4,11 @@ import BucketPage from './components/view/BucketPage';
 import AddItemForm from './components/functional/AddItemForm';
 import LogOut from './components/view/LogOut';
 import './App.scss';
-import LoginPage from './components/view/LoginPage';
+import LoginPage from './components/view/loginPage';
 import RegistrationPage from './components/view/registrationPage'
 import { Route, withRouter } from "react-router-dom"
+import axios from "axios"
+import Axios from "axios"
 
 class App extends Component {
   constructor(props) {
