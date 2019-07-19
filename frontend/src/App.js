@@ -31,7 +31,7 @@ class App extends Component {
     event.preventDefault();
     if (this.state.newItem !== '') {
       axios
-        .post('https://bucketlist-builds.herokuapp.com/users/1/bucketlist', {title: this.state.itemTitle, description: this.state.itemText}
+        .post('https://bucketlist-builds.herokuapp.com/users//bucketlist', {title: this.state.itemTitle, description: this.state.itemText}
         )
         .then(res => this.goBackWithID() )
         .catch(err => console.log('Post Error on Add New Item', err));
