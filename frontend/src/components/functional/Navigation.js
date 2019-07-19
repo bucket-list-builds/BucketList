@@ -16,6 +16,7 @@ import {
 class Navigation extends Component {
   constructor(props) {
     super(props);
+    this.loggedInUser = this.props.loggedInUser
     // this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false
@@ -51,7 +52,7 @@ class Navigation extends Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <NavLink to='/user/:id/add-todo'>Add Todo</NavLink>
+                    <NavLink to={`/users/${this.props.loggedInUserID}/bucketlist/add-item`}>Add New Item</NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink to='/user/:id'>Profile</NavLink>

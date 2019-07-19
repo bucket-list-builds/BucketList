@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Axios from 'axios'
 import Navigation from './components/functional/Navigation';
 import BucketPage from './components/view/BucketPage';
 import AddItemForm from './components/functional/AddItemForm';
@@ -10,8 +9,9 @@ import RegistrationPage from './components/view/registrationPage'
 import { Route, withRouter } from "react-router-dom"
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.id = this.props.match.params.id
     this.state = {
       bucketList: [],
       users: [],
@@ -50,40 +50,39 @@ class App extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  addNewItem = event => {
+  goBackWithID = (childData) => {
+    console.log('childData', childData)
+    this.props.history.push(`/users/${this.id}/bucketlist`)
+  }
+
+  addNewItem = (event) => {
     event.preventDefault();
-    if (this.state.newItem !== "") {
-      this.setState(
-        prevState => {
-          return {
-            bucketList: [...prevState.bucketList, {
-              itemTitle: this.state.itemTitle,
-              itemText: this.state.itemText,
-              id: Date.now(),
-              completed: false
-            }],
-            itemTitle: ``,
-            itemText: ``
-          };
-        },
-      );
+    if (this.state.newItem !== '') {
+      axios
+        .post('https://bucketlist-builds.herokuapp.com/users//bucketlist', {title: this.state.itemTitle, description: this.state.itemText}
+        )
+        .then(res => this.goBackWithID() )
+        .catch(err => console.log('Post Error on Add New Item', err));
     }
   };
-
   toggleHandler = event => {
-    const toggledArray = [...this.state.bucketList]
+    const toggledArray = [...this.state.bucketList];
     let position = null;
-    
+
     const target = toggledArray.find((cur, index) => {
-      position = index
-      return cur.id === Number.parseInt(event.target.getAttribute('data-key'), 10)
+      position = index;
+      return (
+        cur.id === Number.parseInt(event.target.getAttribute('data-key'), 10)
+      );
     });
 
-    target.completed === false ? target.completed = true : target.completed = false;
-    
+    target.completed === false
+      ? (target.completed = true)
+      : (target.completed = false);
+
     toggledArray[position] = target;
 
-    this.setState({bucketList: toggledArray});
+    this.setState({ bucketList: toggledArray });
   };
 
   signIn = (username, password, event) => {
