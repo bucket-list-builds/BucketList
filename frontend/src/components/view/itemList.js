@@ -6,7 +6,7 @@ import { CardGroup } from 'reactstrap';
 const ItemList = props => {
   return (
     <CardGroup className="fader">
-      {props.bucketList.map(item => {
+      {props.bucketListID.map(item => {
         return (
           <span className='faded'><Item
             listItemTitle={item.title}

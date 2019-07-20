@@ -25,7 +25,7 @@ class LoginPage extends Component {
          .then(res => {
            localStorage.setItem('jwt', res.data.token);
            localStorage.setItem('user_id', res.data.user_id)
-           this.props.history.push('/home');
+           this.props.history.push('/bucketlist');
          }).catch(err => {
            console.log(err);
          })
