@@ -19,7 +19,7 @@ https://bucketlist-builds.herokuapp.com
 | GET | | GET | https://bucketlist-builds.herokuapp.com/users/:id | Retrieves a specific user |
 | GET | https://bucketlist-builds.herokuapp.com/users/:id/bucketlist | Retrieve a specific user's bucketlist based on id |
 | POST | https://bucketlist-builds.herokuapp.com/users/:id/bucketlist | Add a new bucketlist for a specific user |
-| -- | -- | -- |
+
 
 # Single Bucketlist Item Object
 
