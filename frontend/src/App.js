@@ -70,6 +70,9 @@ class App extends Component {
 
     updateBucket = newBucket => {
       this.setState({ bucketlist: newBucket });
+      setTimeout(() => {
+        window.location.reload()
+      }, 100) 
     }
 
  

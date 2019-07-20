@@ -1,14 +1,20 @@
 import React from 'react';
 import Item from './item';
 import { CardGroup } from 'reactstrap';
+import Axios from 'axios';
 
-
+// handleDone = event => {
+//   event.preventDefault();
+//   Axios.delete(`https://bucketlist-builds.herokuapp.com/home/${this.id}`)
+// }
 const ItemList = props => {
   return (
     <CardGroup className="fader">
       {props.bucketListID.map(item => {
         return (
-          <span className='faded'><Item
+          <div>
+          <span className='faded'>
+            <Item
             listItemTitle={item.title}
             listItemText={item.description}
             id={item.id}
@@ -22,6 +28,8 @@ const ItemList = props => {
             passedDownID={props.passedDownID}
           />
           </span>
+          {/* <button onClick={}>Done</button> */}
+          </div>
         );
       })}
     </CardGroup>
