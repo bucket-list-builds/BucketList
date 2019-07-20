@@ -127,10 +127,25 @@ class App extends Component {
   //   });
   // }
 
+  onLogin = e => {
+    e.preventDefault();
+    this.props.history.push("/login");
+  };
+
+  onRegister = e => {
+    e.preventDefault();
+    this.props.history.push("register");
+  };
+
   render() {
     return (
       <div className="App">
         <Navigation isLoggedIn={this.state.isLoggedIn} />
+
+        <div>
+          <button onClick={this.onLogin}>Log In</button>
+          <button onClick={this.onRegister}>Register</button>
+        </div>
 
         <Route path="/" render={props => <LogOut {...props} />} />
         <Route exact path="/login" render={props => <LoginPage {...props} />} />
