@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import ItemList from './itemList';
-import axios from 'axios';
+import React, { Component } from "react";
+import ItemList from "./itemList";
+import axios from "axios";
 
 class BucketPage extends Component {
   constructor(props) {
@@ -22,20 +22,20 @@ class BucketPage extends Component {
       itemText: ``
     };
   }
+
   componentDidMount() {
-    console.log(this.props.match)
-    axios.get(
-      `https://bucketlist-builds.herokuapp.com/users/${this.id}/bucketlist`
-    ).then(res => {    
-      
-      console.log('this is the data', res.data)
-      this.setState({ bucketList: [...res.data]})
-    })
-      .catch(err => console.log('this is the error', err))
-    
+    console.log(this.props.match);
+    axios
+      .get(
+        `https://bucketlist-builds.herokuapp.com/users/${this.id}/bucketlist`
+      )
+      .then(res => {
+        console.log("this is the data", res.data);
+        this.setState({ bucketList: [...res.data] });
+      })
+      .catch(err => console.log("this is the error", err));
   }
 
-  
   render() {
     return (
       <ItemList
