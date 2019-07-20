@@ -10,7 +10,6 @@ https://bucketlist-builds.herokuapp.com
 | -- | -- | -- |
 | POST | https://bucketlist-builds.herokuapp.com/api/auth/register | Adds user creds to DB. Returns id, username and token |
 | POST | https://bucketlist-builds.herokuapp.com/api/auth/login |**NOT SET YET** Allows user access. Returns token and message |
-| -- | -- | -- |
 | POST | https://bucketlist-builds.herokuapp.com/home | Adds item to DB. |
 | GET | https://bucketlist-builds.herokuapp.com/home | Returns an array of all bucketlist objects. |
 | GET | https://bucketlist-builds.herokuapp.com/home/:id | **:id = bucketlist item's id.** Return a bucketlist by id. information(see below) |
@@ -20,7 +19,7 @@ https://bucketlist-builds.herokuapp.com
 | GET | | GET | https://bucketlist-builds.herokuapp.com/users/:id | Retrieves a specific user |
 | GET | https://bucketlist-builds.herokuapp.com/users/:id/bucketlist | Retrieve a specific user's bucketlist based on id |
 | POST | https://bucketlist-builds.herokuapp.com/users/:id/bucketlist | Add a new bucketlist for a specific user |
-| -- | -- | -- |
+
 
 # Single Bucketlist Item Object
 
