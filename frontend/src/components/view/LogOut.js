@@ -6,7 +6,8 @@ class LogOut extends Component {
         event.preventDefault();
     
         localStorage.removeItem('jwt');
-        this.props.history.push('/')
+        localStorage.removeItem('user_id')
+        this.props.history.push('/login')
       }
 
     render() {
