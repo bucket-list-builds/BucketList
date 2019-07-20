@@ -5,11 +5,16 @@ class LogOut extends Component {
     event.preventDefault();
 
     localStorage.removeItem("jwt");
-    this.props.history.push("/");
+    localStorage.removeItem("user_id");
+    this.props.history.push("/login");
   };
 
   render() {
-    return <button onClick={this.handleLogout}>Logout</button>;
+    return (
+      <li>
+        <button onClick={this.handleLogout}>Logout</button>
+      </li>
+    );
   }
 }
 

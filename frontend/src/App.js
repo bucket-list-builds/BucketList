@@ -7,7 +7,6 @@ import "./App.scss";
 import LoginPage from "./components/view/loginPage";
 import RegistrationPage from "./components/view/registrationPage";
 import { Route, withRouter } from "react-router-dom";
-import axios from "axios";
 import Axios from "axios";
 
 class App extends Component {
@@ -16,21 +15,42 @@ class App extends Component {
     this.id = this.props.match.params.id;
     this.state = {
       bucketList: [],
+      bucketListID: [],
       users: [],
-      isOwner: true,
-      isLoggedIn: false,
-      itemTitle: ``,
-      itemText: ``
+      user_id: parseInt(localStorage.getItem("user_id"))
     };
   }
 
   componentDidMount() {
+    // let userid = parseInt(localStorage.getItem("user_id"))
+    // Axios.get(`https://buckitlist-backend.herokuapp.com/users/${userid}`)
+    //   .then(res => {
+    //     this.setState({ user_id: res.data.id })
+    //     console.log(this.state.user_id)
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
+
     //fetching/getting bucketlist from API.
     Axios.get("https://bucketlist-builds.herokuapp.com/home")
       .then(response => {
         // console.log(this.state.bucketList);
         this.setState({ bucketList: response.data });
         console.log(this.state.bucketList);
+      })
+      .catch(error => {
+        console.log(error.response);
+      });
+
+    Axios.get(
+      `https://bucketlist-builds.herokuapp.com/users/${
+        this.state.user_id
+      }/bucketlist`
+    )
+      .then(response => {
+        // console.log(this.state.bucketList);
+        this.setState({ bucketListID: response.data });
+        console.log(this.state.bucketListID);
       })
       .catch(error => {
         console.log(error.response);
@@ -48,77 +68,72 @@ class App extends Component {
       });
   }
 
+  updateBucket = newBucket => {
+    this.setState({ bucketlist: newBucket });
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
+  };
+
   textInputHandler = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  goBackWithID = childData => {
-    console.log("childData", childData);
-    this.props.history.push(`/users/${this.id}/bucketlist`);
-  };
+  // goBackWithID = (childData) => {
+  //   console.log('childData', childData)
+  //   this.props.history.push(`/users/3/bucketlist`)
+  // }
 
-  addNewItem = event => {
-    event.preventDefault();
-    if (this.state.newItem !== "") {
-      axios
-        .post("https://bucketlist-builds.herokuapp.com/users//bucketlist", {
-          title: this.state.itemTitle,
-          description: this.state.itemText
-        })
-        .then(res => this.goBackWithID())
-        .catch(err => console.log("Post Error on Add New Item", err));
-    }
-  };
-  toggleHandler = event => {
-    const toggledArray = [...this.state.bucketList];
-    let position = null;
+  // addNewItem = (event) => {
+  //   event.preventDefault();
+  //   console.log(this.state.user_id)
+  //     Axios
+  //       .post(`https://buckitlist-backend.herokuapp.com/users/3/bucketlist`, {title: this.state.itemTitle, description: this.state.itemText}
+  //       )
+  //       .then(res => this.goBackWithID() )
+  //       .catch(err => console.log('Post Error on Add New Item', err));
 
-    const target = toggledArray.find((cur, index) => {
-      position = index;
-      return (
-        cur.id === Number.parseInt(event.target.getAttribute("data-key"), 10)
-      );
-    });
+  // };
 
-    target.completed === false
-      ? (target.completed = true)
-      : (target.completed = false);
+  // toggleHandler = event => {
+  //   const toggledArray = [...this.state.bucketList];
+  //   let position = null;
 
-    toggledArray[position] = target;
+  //   const target = toggledArray.find((cur, index) => {
+  //     position = index;
+  //     return (
+  //       cur.id === Number.parseInt(event.target.getAttribute('data-key'), 10)
+  //     );
+  //   });
 
-    this.setState({ bucketList: toggledArray });
-  };
+  //   target.completed === false
+  //     ? (target.completed = true)
+  //     : (target.completed = false);
 
-  signIn = (username, password, event) => {
-    event.preventDefault();
-    const result = this.state.users.find(user => {
-      if (user.username === username) {
-        console.log("User found!");
-      } else {
-        console.log("User not found!");
-      }
-    });
-  };
+  //   toggledArray[position] = target;
 
-  onLogin = e => {
-    e.preventDefault();
-    this.props.history.push("/login");
-  };
+  //   this.setState({ bucketList: toggledArray });
+  // };
 
-  onRegister = e => {
-    e.preventDefault();
-    this.props.history.push("register");
-  };
+  // signIn = (username, password, event) => {
+  //   event.preventDefault();
+  //   const result = this.state.users.find(user => {
+  //     if (user.username === username) {
+  //       console.log('User found!');
+  //     }
+  //     else {
+  //       console.log('User not found!');
+  //     }
+  //   });
+  // }
 
   render() {
     return (
       <div className="App">
         <Navigation isLoggedIn={this.state.isLoggedIn} />
-        <div>
-          <button onClick={this.onLogin}>Log In</button>
-          <button onClick={this.onRegister}>Register</button>
-        </div>
-        <Route path="/login" render={props => <LoginPage {...props} />} />
+
+        <Route path="/" render={props => <LogOut {...props} />} />
+        <Route exact path="/login" render={props => <LoginPage {...props} />} />
 
         <Route
           path="/register"
@@ -126,18 +141,37 @@ class App extends Component {
         />
 
         <Route
+          // exact path='/users/:id/bucketlist'
           exact
-          path="/home"
+          path="/bucketlist"
           render={props => (
             <BucketPage
               {...props}
               bucketList={this.state.bucketList}
-              completionToggle={this.toggleHandler}
-              isOwner={this.state.isOwner}
+              bucketListID={this.state.bucketListID}
+              user_id={this.state.user_id}
+              // completionToggle={this.toggleHandler}
+              // isOwner={this.state.isOwner}
+              // getData = {this.getData}
             />
           )}
         />
-        <Route path="/" render={props => <LogOut {...props} />} />
+
+        <Route
+          path="/bucketlist/item-form"
+          render={props => (
+            <AddItemForm
+              {...props}
+              bucketList={this.state.bucketList}
+              updateBucket={this.updateBucket}
+              user_id={this.state.user_id}
+              // completionToggle={this.toggleHandler}
+              // isOwner={this.state.isOwner}
+              // getData = {this.getData}
+              // addNewItem = {this.addNewItem}
+            />
+          )}
+        />
       </div>
     );
   }

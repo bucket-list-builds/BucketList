@@ -14,7 +14,7 @@ class RegistrationPage extends Component {
         this.state = {
             username: '',
             password: '',
-            // hasAgreed: false
+            
 
         }
 
@@ -32,12 +32,7 @@ class RegistrationPage extends Component {
             [name]: value
         })
     }
-    // handleSubmit(event) {
-    //     event.preventDefault();
-
-    //     console.log('The form was submitted with the following data:')
-    //     console.log(this.state);
-    // }
+ 
 
     handleSubmit = event => {
         event.preventDefault();
@@ -45,7 +40,7 @@ class RegistrationPage extends Component {
           .then(res => {
               console.log(this.props)
             localStorage.setItem('jwt', res.data.token);
-            this.props.history.push('/home');
+            this.props.history.push('/login');
           }).catch(err => {
             console.log(err);
           })
@@ -81,19 +76,7 @@ class RegistrationPage extends Component {
                             onChange={this.handleChange}
                         />
                         
-                    </div>
-                    {/* <div>
-                        <label>
-                            <input 
-                                type="checkbox" 
-                                name="hasAgreed"
-                                value={this.state.hasAgreed} 
-                                onChange={this.handleChange}
-                            />
-                            I agree to no terms of agreement.
-                        </label>
-                    </div> */}
-                    <div>
+                   
                         <button>Sign Up</button>
 
                     </div>
